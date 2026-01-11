@@ -1,1 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malla Interactiva - Ingeniería Comercial</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
 
+    <header>
+        <h1>Malla Curricular Interactiva</h1>
+        <p class="subtitle">Ingeniería Comercial</p>
+        <div class="progress-info">
+            <div id="progreso-grado" class="badge">Grado: Licenciada en Ciencias Económicas (0%)</div>
+            <div id="progreso-titulo" class="badge">Título: Ingeniera Comercial (0%)</div>
+        </div>
+        <button id="reset-btn">Reiniciar Progreso</button>
+    </header>
+
+    <main class="malla-container">
+        <div id="malla-grid" class="malla-grid">
+            </div>
+    </main>
+
+    <div class="legend">
+        <span class="legend-item"><span class="box pendiente"></span> Pendiente</span>
+        <span class="legend-item"><span class="box aprobado"></span> Aprobado</span>
+        <span class="legend-item"><span class="box bloqueado"></span> Bloqueado</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

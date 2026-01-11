@@ -1,189 +1,178 @@
-// 1. Datos de la Malla
-const malla = [
-    { id: 'fund_eco', name: 'Fundamentos de la Economía', sem: 1, cat: 'Formación Disciplinaria', reqs: [] },
-    { id: 'mat_gest', name: 'Matemática para la Gestión', sem: 1, cat: 'Formación Disciplinaria', reqs: [] },
-    { id: 'sost_emp', name: 'Sostenibilidad Empresarial', sem: 1, cat: 'Formación Profesional', reqs: [] },
-    { id: 'tec_neg_1', name: 'Tecnología para los Negocios I', sem: 1, cat: 'Formación Profesional', reqs: [] },
-    { id: 'antrop', name: 'Antropología', sem: 1, cat: 'Formación e Identidad', reqs: [] },
-    
-    { id: 'algebra', name: 'Álgebra', sem: 2, cat: 'Formación Disciplinaria', reqs: ['mat_gest'] },
-    { id: 'micro_1', name: 'Microeconomía I', sem: 2, cat: 'Formación Disciplinaria', reqs: ['fund_eco'] },
-    { id: 'fund_mkt', name: 'Fundamentos de Marketing', sem: 2, cat: 'Formación Profesional', reqs: [] },
-    { id: 'fund_cont', name: 'Fundamentos de Contabilidad', sem: 2, cat: 'Formación Profesional', reqs: [] },
-    { id: 'tec_neg_2', name: 'Tecnología para los Negocios II', sem: 2, cat: 'Formación Profesional', reqs: [] },
-    { id: 'gest_est', name: 'Gestión Estratégica', sem: 2, cat: 'Formación Profesional', reqs: [] },
-    
-    { id: 'macro_1', name: 'Macroeconomía', sem: 3, cat: 'Formación Disciplinaria', reqs: ['fund_eco'] },
-    { id: 'calc_gest', name: 'Cálculo Aplicado a la Gestión', sem: 3, cat: 'Formación Disciplinaria', reqs: ['algebra'] },
-    { id: 'mkt_dig', name: 'Marketing Digital', sem: 3, cat: 'Formación Profesional', reqs: ['fund_mkt'] },
-    { id: 'cont_ger', name: 'Contabilidad Gerencial', sem: 3, cat: 'Formación Profesional', reqs: ['fund_cont'] },
-    { id: 'bus_ana', name: 'Business Analytics', sem: 3, cat: 'Formación Profesional', reqs: ['tec_neg_2'] },
-    { id: 'etica', name: 'Ética', sem: 3, cat: 'Formación e Identidad', reqs: ['antrop'] },
+// Base de datos de los ramos
+const ramos = [
+    // SEMESTRE 1
+    { id: "fund_eco", name: "Fundamentos de la Economía", sem: 1, cat: "disciplinaria", req: [] },
+    { id: "mat_gest", name: "Matemática para la Gestión", sem: 1, cat: "disciplinaria", req: [] },
+    { id: "sost_emp", name: "Sostenibilidad Empresarial", sem: 1, cat: "profesional", req: [] },
+    { id: "tec_neg_1", name: "Tecnología para los Negocios I", sem: 1, cat: "profesional", req: [] },
+    { id: "antrop", name: "Antropología", sem: 1, cat: "identidad", req: [] },
 
-    { id: 'prob_est', name: 'Probabilidad y Estadística', sem: 4, cat: 'Formación Disciplinaria', reqs: ['mat_gest'] },
-    { id: 'macro_4', name: 'Macroeconomía (S4)', sem: 4, cat: 'Formación Disciplinaria', reqs: ['fund_eco'] },
-    { id: 'merc_lab', name: 'Mercado Laboral y Gestión de Personas', sem: 4, cat: 'Formación Profesional', reqs: [] },
-    { id: 'finanzas', name: 'Finanzas', sem: 4, cat: 'Formación Profesional', reqs: ['cont_ger'] },
-    { id: 'gest_pers', name: 'Gestión Personal y Habilidades', sem: 4, cat: 'Gestión y Empleabilidad', reqs: [] },
+    // SEMESTRE 2
+    { id: "alge", name: "Álgebra", sem: 2, cat: "disciplinaria", req: ["mat_gest"] },
+    { id: "micro_1", name: "Microeconomía I", sem: 2, cat: "disciplinaria", req: ["fund_eco"] },
+    { id: "fund_mark", name: "Fundamentos de Marketing", sem: 2, cat: "profesional", req: [] },
+    { id: "fund_cont", name: "Fundamentos de Contabilidad", sem: 2, cat: "profesional", req: [] },
+    { id: "tec_neg_2", name: "Tecnología para los Negocios II", sem: 2, cat: "profesional", req: [] },
+    { id: "gest_est", name: "Gestión Estratégica", sem: 2, cat: "profesional", req: [] },
 
-    { id: 'hito_1', name: 'Hito Evaluativo Integrativo', sem: 4.5, cat: 'Hito', reqs: ['SEM_2', 'SEM_3'] },
+    // SEMESTRE 3
+    { id: "macro", name: "Macroeconomía", sem: 3, cat: "disciplinaria", req: ["fund_eco"] },
+    { id: "calc_gest", name: "Cálculo Aplicado a la Gestión", sem: 3, cat: "disciplinaria", req: ["alge"] },
+    { id: "mark_dig", name: "Marketing Digital", sem: 3, cat: "profesional", req: ["fund_mark"] },
+    { id: "cont_ger", name: "Contabilidad Gerencial", sem: 3, cat: "profesional", req: ["fund_cont"] },
+    { id: "bus_ana", name: "Business Analytics", sem: 3, cat: "profesional", req: ["tec_neg_2"] },
+    { id: "etica", name: "Ética", sem: 3, cat: "identidad", req: ["antrop"] },
 
-    { id: 'micro_2', name: 'Microeconomía II', sem: 5, cat: 'Formación Disciplinaria', reqs: ['micro_1'] },
-    { id: 'est_avan', name: 'Estadística Avanzada', sem: 5, cat: 'Formación Disciplinaria', reqs: ['prob_est'] },
-    { id: 'fin_ger', name: 'Finanzas Gerenciales', sem: 5, cat: 'Formación Profesional', reqs: ['finanzas'] },
-    { id: 'big_data', name: 'Big Data Analytics', sem: 5, cat: 'Formación Profesional', reqs: ['bus_ana'] },
-    { id: 'int_merc', name: 'Inteligencia de Mercado', sem: 5, cat: 'Formación Profesional', reqs: ['fund_mkt'] },
-    { id: 'pers_soc', name: 'Persona y Sociedad', sem: 5, cat: 'Formación e Identidad', reqs: ['etica'] },
+    // SEMESTRE 4
+    { id: "prob_est", name: "Probabilidad y Estadística", sem: 4, cat: "disciplinaria", req: ["mat_gest"] },
+    { id: "merc_lab", name: "Mercado Laboral y Gestión de Personas", sem: 4, cat: "profesional", req: [] },
+    { id: "fina", name: "Finanzas", sem: 4, cat: "profesional", req: ["cont_ger"] },
+    { id: "gest_pers", name: "Gestión Personal y Hab. Vida", sem: 4, cat: "gestion", req: [] },
 
-    { id: 'pol_macro', name: 'Política Macroeconómica', sem: 6, cat: 'Formación Disciplinaria', reqs: ['macro_1'] },
-    { id: 'lid_eq', name: 'Taller de Liderazgo y Equipo', sem: 6, cat: 'Formación Profesional', reqs: [] },
-    { id: 'econometria', name: 'Econometría', sem: 6, cat: 'Formación Profesional', reqs: ['calc_gest', 'est_avan'] },
-    { id: 'ger_sost', name: 'Gerencia Estratégica y Sostenibilidad', sem: 6, cat: 'Formación Profesional', reqs: [] },
-    { id: 'leg_emp', name: 'Legislación para el Emprendimiento', sem: 6, cat: 'Formación Profesional', reqs: [] },
-    { id: 'elec_1_id', name: 'Electivo I: Formación e Identidad', sem: 6, cat: 'Formación e Identidad', reqs: [] },
+    // SEMESTRE 5
+    { id: "micro_2", name: "Microeconomía II", sem: 5, cat: "disciplinaria", req: ["micro_1"] },
+    { id: "est_avan", name: "Estadística Avanzada", sem: 5, cat: "disciplinaria", req: ["prob_est"] },
+    { id: "fina_ger", name: "Finanzas Gerenciales", sem: 5, cat: "profesional", req: ["fina"] },
+    { id: "big_data", name: "Big Data Analytics", sem: 5, cat: "profesional", req: ["bus_ana"] },
+    { id: "int_merc", name: "Inteligencia de Mercado", sem: 5, cat: "profesional", req: ["fund_mark"] },
+    { id: "pers_soc", name: "Persona y Sociedad", sem: 5, cat: "identidad", req: ["etica"] },
 
-    { id: 'alianzas', name: 'Alianzas Público-Privadas', sem: 7, cat: 'Formación Profesional', reqs: [] },
-    { id: 'tall_inn', name: 'Taller de Innovación', sem: 7, cat: 'Formación Profesional', reqs: ['SEM_1', 'SEM_2', 'SEM_3', 'SEM_4', 'SEM_5', 'SEM_6'] },
-    { id: 'data_sci', name: 'Data Science', sem: 7, cat: 'Formación Profesional', reqs: ['big_data'] },
-    { id: 'eval_proy', name: 'Formulación y Evaluación de Proyectos', sem: 7, cat: 'Formación Profesional', reqs: ['fin_ger'] },
-    { id: 'elec_2_id', name: 'Electivo II: Formación e Identidad', sem: 7, cat: 'Formación e Identidad', reqs: [] },
-    { id: 'gest_alto', name: 'Gestión en Equipos Alto Desempeño', sem: 7, cat: 'Gestión y Empleabilidad', reqs: [] },
+    // SEMESTRE 6
+    { id: "pol_macro", name: "Política Macroeconómica", sem: 6, cat: "disciplinaria", req: ["macro"] },
+    { id: "lider", name: "Liderazgo y Trabajo Equipo", sem: 6, cat: "profesional", req: [] },
+    { id: "econome", name: "Econometría", sem: 6, cat: "profesional", req: ["calc_gest", "est_avan"] },
+    { id: "ger_est_sos", name: "Gerencia Estratégica y Sost.", sem: 6, cat: "profesional", req: [] },
+    { id: "leg_emp", name: "Legislación Emprendimiento", sem: 6, cat: "profesional", req: [] },
+    { id: "elec_iden_1", name: "Electivo I: Identidad", sem: 6, cat: "identidad", req: ["sem_1", "sem_2", "sem_3", "sem_4", "sem_5"] },
 
-    { id: 'des_org', name: 'Desarrollo Organizacional', sem: 8, cat: 'Formación Profesional', reqs: [] },
-    { id: 'comp_etica', name: 'Compliance y Ética', sem: 8, cat: 'Formación Profesional', reqs: [] },
-    { id: 'tall_erp', name: 'Taller de ERP', sem: 8, cat: 'Formación Profesional', reqs: [] },
-    { id: 'tall_emp', name: 'Taller de Emprendimiento', sem: 8, cat: 'Formación Profesional', reqs: ['tall_inn'] },
-    { id: 'elec_3_id', name: 'Electivo III: Formación e Identidad', sem: 8, cat: 'Formación e Identidad', reqs: [] },
+    // SEMESTRE 7
+    { id: "pub_priv", name: "Alianzas Público - Privadas", sem: 7, cat: "profesional", req: [] },
+    { id: "tall_inno", name: "Taller de Innovación", sem: 7, cat: "profesional", req: ["sem_1", "sem_2", "sem_3", "sem_4", "sem_5", "sem_6"] },
+    { id: "data_sci", name: "Data Science", sem: 7, cat: "profesional", req: ["big_data"] },
+    { id: "form_eval", name: "Formulación Proyectos", sem: 7, cat: "profesional", req: ["fina_ger"] },
+    { id: "elec_iden_2", name: "Electivo II: Identidad", sem: 7, cat: "identidad", req: ["sem_1", "sem_2", "sem_3", "sem_4", "sem_5", "sem_6"] },
+    { id: "gest_eq", name: "Gestión Equipos Alto Des.", sem: 7, cat: "gestion", req: [] },
 
-    { id: 'hito_2', name: 'Hito Integrativo Interprofesional', sem: 8.5, cat: 'Hito', reqs: ['SEM_6', 'SEM_7'] },
+    // SEMESTRE 8
+    { id: "des_org", name: "Desarrollo Organizacional", sem: 8, cat: "profesional", req: [] },
+    { id: "comp_etica", name: "Compliance y Ética", sem: 8, cat: "profesional", req: [] },
+    { id: "tall_erp", name: "Taller de ERP", sem: 8, cat: "profesional", req: [] },
+    { id: "tall_emp", name: "Taller Emprendimiento", sem: 8, cat: "profesional", req: ["tall_inno"] },
+    { id: "elec_iden_3", name: "Electivo III: Identidad", sem: 8, cat: "identidad", req: ["sem_1", "sem_2", "sem_3", "sem_4", "sem_5", "sem_6", "sem_7"] },
 
-    { id: 'plan_neg', name: 'Plan de Negocios', sem: 9, cat: 'Formación Profesional', reqs: [] },
-    { id: 'trans_dig', name: 'Transformación Digital', sem: 9, cat: 'Formación Profesional', reqs: ['data_sci'] },
-    { id: 'elec_1', name: 'Electivo I', sem: 9, cat: 'Formación Profesional', reqs: ['SEM_1', 'SEM_2', 'SEM_3', 'SEM_4', 'SEM_5', 'SEM_6', 'SEM_7'] },
-    { id: 'elec_2', name: 'Electivo II', sem: 9, cat: 'Formación Profesional', reqs: ['SEM_1', 'SEM_2', 'SEM_3', 'SEM_4', 'SEM_5', 'SEM_6', 'SEM_7'] },
-    { id: 'elec_3', name: 'Electivo III', sem: 9, cat: 'Formación Profesional', reqs: ['SEM_1', 'SEM_2', 'SEM_3', 'SEM_4', 'SEM_5', 'SEM_6', 'SEM_7'] },
-    { id: 'gest_carr', name: 'Gestión de Carrera', sem: 9, cat: 'Gestión y Empleabilidad', reqs: [] },
+    // SEMESTRE 9
+    { id: "plan_neg", name: "Plan de Negocios", sem: 9, cat: "profesional", req: [] },
+    { id: "trans_dig", name: "Transformación Digital", sem: 9, cat: "profesional", req: ["data_sci"] },
+    { id: "elec_prof_1", name: "Electivo Prof I", sem: 9, cat: "profesional", req: [] },
+    { id: "elec_prof_2", name: "Electivo Prof II", sem: 9, cat: "profesional", req: [] },
+    { id: "elec_prof_3", name: "Electivo Prof III", sem: 9, cat: "profesional", req: [] },
+    { id: "gest_carr", name: "Gestión de Carrera", sem: 9, cat: "gestion", req: [] },
 
-    { id: 'prac_prof', name: 'Práctica Profesional', sem: 10, cat: 'Formación Profesional', reqs: ['SEM_1', 'SEM_2', 'SEM_3', 'SEM_4', 'SEM_5', 'SEM_6', 'SEM_7', 'SEM_8'] },
+    // SEMESTRE 10
+    { id: "prac_prof", name: "Práctica Profesional", sem: 10, cat: "profesional", req: ["sem_1", "sem_2", "sem_3", "sem_4", "sem_5", "sem_6", "sem_7", "sem_8"] },
 ];
 
-// 2. Estado de la Aplicación
-let aprobados = JSON.parse(localStorage.getItem('ramos_aprobados')) || [];
-
-// 3. Inicialización
-const container = document.getElementById('malla-container');
+let approved = JSON.parse(localStorage.getItem('malla_progreso')) || [];
 
 function init() {
     renderMalla();
-    updateProgress();
 }
 
 function renderMalla() {
-    container.innerHTML = '';
-    const semestres = [1, 2, 3, 4, 4.5, 5, 6, 7, 8, 8.5, 9, 10];
+    const grid = document.getElementById('malla-grid');
+    grid.innerHTML = '';
 
-    semestres.forEach(sem => {
+    // Crear columnas por semestre
+    for (let s = 1; s <= 10; s++) {
         const col = document.createElement('div');
+        col.className = 'semestre-col';
         
-        if (sem % 1 !== 0) { // Es un Hito
-            col.className = 'hito-col';
-            const hitoData = malla.find(r => r.sem === sem);
-            col.innerHTML = `
-                <div class="hito-title">${hitoData.name}</div>
-                <div class="ramo ${aprobados.includes(hitoData.id) ? 'aprobado' : ''}" 
-                     onclick="toggleRamo('${hitoData.id}')">
-                    <span>Certificar</span>
-                </div>
-            `;
-        } else {
-            col.className = 'semester-col';
-            col.innerHTML = `<div class="semester-header">Semestre ${sem}</div>`;
-            
-            const categorias = [...new Set(malla.map(r => r.cat))].filter(c => c !== 'Hito');
-            
-            categorias.forEach(cat => {
-                const ramosEnCat = malla.filter(r => r.sem === sem && r.cat === cat);
-                if (ramosEnCat.length > 0) {
-                    const catLabel = document.createElement('div');
-                    catLabel.className = 'category-label';
-                    catLabel.innerText = cat;
-                    col.appendChild(catLabel);
-                    
-                    ramosEnCat.forEach(ramo => {
-                        const ramoDiv = document.createElement('div');
-                        ramoDiv.className = `ramo ${aprobados.includes(ramo.id) ? 'aprobado' : ''}`;
-                        ramoDiv.id = ramo.id;
-                        ramoDiv.innerHTML = `<span>${ramo.name}</span>`;
-                        ramoDiv.onclick = () => toggleRamo(ramo.id);
-                        col.appendChild(ramoDiv);
-                    });
-                }
-            });
-        }
-        container.appendChild(col);
-    });
-}
+        const header = document.createElement('div');
+        header.className = 'semestre-header';
+        header.innerText = `Semestre ${s}`;
+        col.appendChild(header);
 
-// 4. Lógica de Aprobación y Requisitos
-function toggleRamo(id) {
-    const ramo = malla.find(r => r.id === id);
-    
-    if (aprobados.includes(id)) {
-        // Lógica para desmarcar (opcional: podrías validar que no sea requisito de otro ya aprobado)
-        aprobados = aprobados.filter(item => item !== id);
-    } else {
-        const faltantes = checkRequirements(ramo);
-        if (faltantes.length === 0) {
-            aprobados.push(id);
-        } else {
-            showNotification(`No puedes aprobar esto aún. Faltan: ${faltantes.join(', ')}`);
-            return;
-        }
+        // Filtrar ramos de este semestre
+        const ramosSemestre = ramos.filter(r => r.sem === s);
+        
+        // Ordenar por categoría para que se vean en "filas" consistentes
+        const categoriasOrder = ["disciplinaria", "profesional", "identidad", "gestion"];
+        ramosSemestre.sort((a, b) => categoriasOrder.indexOf(a.cat) - categoriasOrder.indexOf(b.cat));
+
+        ramosSemestre.forEach(ramo => {
+            const card = document.createElement('div');
+            card.id = ramo.id;
+            card.className = `ramo ${ramo.cat}`;
+            card.innerText = ramo.name;
+
+            if (approved.includes(ramo.id)) {
+                card.classList.add('approved');
+            } else if (!canApprove(ramo.id).status) {
+                card.classList.add('locked');
+            }
+
+            card.onclick = () => toggleRamo(ramo.id);
+            col.appendChild(card);
+        });
+
+        grid.appendChild(col);
     }
-    
-    save();
-    renderMalla();
-    updateProgress();
 }
 
-function checkRequirements(ramo) {
-    let faltantes = [];
-    
-    ramo.reqs.forEach(req => {
-        if (req.startsWith('SEM_')) {
-            const numSemestre = parseInt(req.split('_')[1]);
-            const ramosDelSemestre = malla.filter(r => r.sem === numSemestre);
-            const todosAprobados = ramosDelSemestre.every(r => aprobados.includes(r.id));
-            if (!todosAprobados) faltantes.push(`Todo el Semestre ${numSemestre}`);
+function canApprove(ramoId) {
+    const ramo = ramos.find(r => r.id === ramoId);
+    let missing = [];
+
+    ramo.req.forEach(reqId => {
+        // Caso requisito de semestre completo (ej: sem_1)
+        if (reqId.startsWith("sem_")) {
+            const semNum = parseInt(reqId.split("_")[1]);
+            const ramosDelSemestre = ramos.filter(r => r.sem === semNum);
+            const todoAprobado = ramosDelSemestre.every(r => approved.includes(r.id));
+            if (!todoAprobado) missing.push(`Todo el Semestre ${semNum}`);
         } else {
-            if (!aprobados.includes(req)) {
-                const nombreReq = malla.find(r => r.id === req).name;
-                faltantes.push(nombreReq);
+            // Caso requisito de ramo único
+            if (!approved.includes(reqId)) {
+                const reqRamo = ramos.find(r => r.id === reqId);
+                missing.push(reqRamo.name);
             }
         }
     });
+
+    return { status: missing.length === 0, missing };
+}
+
+function toggleRamo(id) {
+    const validation = canApprove(id);
+
+    if (approved.includes(id)) {
+        // Desmarcar
+        approved = approved.filter(item => item !== id);
+        showNotification(`Ramo "${ramos.find(r => r.id === id).name}" marcado como pendiente.`, "#718093");
+    } else {
+        // Intentar marcar como aprobado
+        if (validation.status) {
+            approved.push(id);
+        } else {
+            showNotification(`¡Bloqueado! Faltan: ${validation.missing.join(", ")}`, "#ff7675");
+            return;
+        }
+    }
+
+    localStorage.setItem('malla_progreso', JSON.stringify(approved));
+    renderMalla();
+}
+
+function showNotification(msg, color) {
+    const note = document.getElementById('notification');
+    note.innerText = msg;
+    note.style.backgroundColor = color;
+    note.classList.remove('hidden');
     
-    return faltantes;
+    setTimeout(() => {
+        note.classList.add('hidden');
+    }, 4000);
 }
 
-// 5. Utilidades
-function save() {
-    localStorage.setItem('ramos_aprobados', JSON.stringify(aprobados));
-}
-
-function updateProgress() {
-    const total = malla.length;
-    const current = aprobados.length;
-    const percentage = Math.round((current / total) * 100);
-    document.getElementById('progress-fill').style.width = `${percentage}%`;
-    document.getElementById('progress-text').innerText = `Progreso: ${percentage}% (${current}/${total} ramos)`;
-}
-
-function showNotification(msg) {
-    const el = document.getElementById('notification');
-    el.innerText = msg;
-    el.classList.remove('hidden');
-    setTimeout(() => el.classList.add('hidden'), 3500);
-}
-
+// Iniciar aplicación
 init();
